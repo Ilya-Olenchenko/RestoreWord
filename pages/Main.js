@@ -9,7 +9,7 @@ export default function Main() {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.box}>
-                <TouchableOpacity style={styles.textbutton} onPress={() => navigation.replace('Game')}>
+                <TouchableOpacity style={styles.textbutton} onPress={() => navigation.navigate('Game')}>
                     <Text style={styles.textmain}>
                         Старт
                     </Text>

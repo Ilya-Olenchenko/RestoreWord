@@ -1,22 +1,22 @@
 import React from 'react'
-import { Text, View, StatusBar, SafeAreaView, Button, TouchableOpacity } from 'react-native'
+import { Text, View, StatusBar, SafeAreaView, TouchableOpacity } from 'react-native'
 import { styles } from '../styles/game'
 
 var point = 0
 
 const WORDS = [
     {
-        id: 1,
+        id: 0,
         word: 'радіо',
         leng: 5
     },
     {
-        id: 2,
+        id: 1,
         word: 'слово',
         leng: 5
     },
     {
-        id: 3,
+        id: 2,
         word: 'собака',
         leng: 6
     }
@@ -33,52 +33,59 @@ function shuffle(array) {
     return array;
 }
 
-const Word = (props) => {
-    if (props.id === props.number) {
-        const arr = props.word.split('')
-        const randArr = props.word.split('')
-        shuffle(randArr)
+//const Word = (props) => {return ()}
 
-        return (
-            <View>
-                <View style={{ flexDirection: 'row' }}>
-                    {
-                        arr.map((letter) => (
-                            <TouchableOpacity style={{ borderWidth: 1, margin: 10 }}>
-                                <Text style={{ fontSize: 40 }}>{letter} </Text>
-                            </TouchableOpacity>
-                        ))
-                    }
-                </View>
+function getWords(point) {
+    const arr = WORDS[point].word.split('')
+    return arr
+}
 
-                <View style={{ flexDirection: 'row' }}>
-                    {
-                        randArr.map((letter) => (
-                            <TouchableOpacity style={{ borderWidth: 1, margin: 10 }}>
-                                <Text style={{ fontSize: 40 }}>{letter} </Text>
-                            </TouchableOpacity>
-                        ))
-                    }
-                </View>
-            </View>
-        );
+function getRandWords(point) {
+    const randArr = WORDS[point].word.split('')
+    shuffle(randArr)
+    return randArr
+}
+
+let replyWord = []
+
+function putNullWords() {
+    var i = 0
+    while (WORDS[point].leng > i) {
+        replyWord[i] = "-"
+        i++
     }
+
+    return replyWord
 }
 
 export default function Game() {
+    let confusedArr = getRandWords(point)
+    putNullWords()
 
-
+    console.log(replyWord)
     return (
-        <SafeAreaView>
-            {
-                WORDS.map((item, index) =>
-                    < View key={index} >
-                        <Word id={item.id} number={2} word={item.word} />
-                    </View>
-                )
-            }
+        <SafeAreaView style={styles.container}>
+            <View
+                style={styles.box1}>
+                {
+                    confusedArr.map((item, index) => (
+                        <TouchableOpacity key={index} style={{ borderWidth: 1, marginRight: 10, }}>
+                            <Text style={{ fontSize: 40, padding: 5, fontFamily: 'alkalami-regula' }}>{item} </Text>
+                        </TouchableOpacity>
+                    ))
+                }
+            </View>
 
-
+            <View
+                style={styles.box2}>
+                {
+                    replyWord.map((item, index) => (
+                        <TouchableOpacity key={index} style={{ borderWidth: 1, marginRight: 10 }}>
+                            <Text style={{ fontSize: 40, padding: 5 }}>{item} </Text>
+                        </TouchableOpacity>
+                    ))
+                }
+            </View>
 
 
             <StatusBar

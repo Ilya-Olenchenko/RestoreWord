@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react';
 import { Text, View, StatusBar, SafeAreaView, TouchableOpacity } from 'react-native'
 import { styles } from '../styles/game'
 
 var point = 0
-
+const replyWord = []
 const WORDS = [
     {
         id: 0,
@@ -19,6 +19,11 @@ const WORDS = [
         id: 2,
         word: 'собака',
         leng: 6
+    },
+    {
+        id: 3,
+        word: 'антологія',
+        leng: 9
     }
 ]
 
@@ -33,20 +38,11 @@ function shuffle(array) {
     return array;
 }
 
-//const Word = (props) => {return ()}
-
-function getWords(point) {
-    const arr = WORDS[point].word.split('')
-    return arr
-}
-
 function getRandWords(point) {
     const randArr = WORDS[point].word.split('')
     shuffle(randArr)
     return randArr
 }
-
-let replyWord = []
 
 function putNullWords() {
     var i = 0
@@ -54,39 +50,49 @@ function putNullWords() {
         replyWord[i] = "-"
         i++
     }
-
-    return replyWord
 }
 
-export default function Game() {
-    let confusedArr = getRandWords(point)
-    putNullWords()
+const confusedArr = getRandWords(point)
 
-    console.log(replyWord)
+export default function Game() {
+    const [words, setWords] = useState([]);
+
+    function deleteElementFromWords(index) {
+        setWords(words.filter(obj => obj.index !== index));
+    }
+
+    const Word = (props) => {
+        return (
+            < TouchableOpacity
+                key={props.index} style={styles.button2}
+                onPress={() => deleteElementFromWords(props.index)}>
+                <Text style={styles.word2}>{props.item} </Text>
+            </TouchableOpacity >
+        )
+    }
+
+    const ConfusedWord = (props) => {
+        return (
+            confusedArr.map((item, index) => (
+                <TouchableOpacity key={index} style={styles.button1}
+                    onPress={() => setWords([...words, <Word item={item} index={index} />])}>
+                    <Text style={styles.word1}>{item} </Text>
+                </TouchableOpacity>
+            ))
+        )
+    }
+
+    console.log(words)
     return (
         <SafeAreaView style={styles.container}>
-            <View
-                style={styles.box1}>
-                {
-                    confusedArr.map((item, index) => (
-                        <TouchableOpacity key={index} style={{ borderWidth: 1, marginRight: 10, }}>
-                            <Text style={{ fontSize: 40, padding: 5, fontFamily: 'alkalami-regula' }}>{item} </Text>
-                        </TouchableOpacity>
-                    ))
-                }
+
+            <View style={styles.box1}>
+                <ConfusedWord />
             </View>
 
-            <View
-                style={styles.box2}>
-                {
-                    replyWord.map((item, index) => (
-                        <TouchableOpacity key={index} style={{ borderWidth: 1, marginRight: 10 }}>
-                            <Text style={{ fontSize: 40, padding: 5 }}>{item} </Text>
-                        </TouchableOpacity>
-                    ))
-                }
+            <View style={styles.box2}>
+                {words.map(elem => elem)}
             </View>
-
 
             <StatusBar
                 animated={true}

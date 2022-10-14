@@ -9,23 +9,48 @@ export const styles = StyleSheet.create({
         alignItems: 'center'
     },
     box1: {
-        height: 100,
-        width: '90%',
+        height: 70,
+        width: '99%',
         marginBottom: 10,
         flexDirection: 'row',
         justifyContent: 'center',
         alignContent: 'center',
         alignItems: 'center',
-        borderWidth: 4
     },
     box2: {
-        height: 100,
-        width: '90%',
+        height: 70,
+        width: '10%',
         marginTop: 10,
         flexDirection: 'row',
         justifyContent: 'center',
         alignContent: 'center',
         alignItems: 'center',
-        borderWidth: 4
+    },
+    button1: {
+        width: 30,
+        width: 30,
+        borderWidth: 1,
+        borderRadius: 5,
+        margin: 5,
+        alignItems: 'center',
+        paddingLeft: 5
+    },
+    button2: {
+        width: 30,
+        width: 30,
+        borderWidth: 1,
+        borderRadius: 5,
+        margin: 5,
+        alignItems: 'center',
+        paddingLeft: 5
+    },
+    word1: {
+        fontSize: 30,
+        fontFamily: 'robot-media'
+
+    },
+    word2: {
+        fontSize: 30,
+        fontFamily: 'robot-media'
     }
 })

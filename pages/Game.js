@@ -3,6 +3,7 @@ import { Text, View, StatusBar, SafeAreaView, TouchableOpacity } from 'react-nat
 import { styles } from '../styles/game'
 
 var point = 0
+var chek = false
 const replyWord = []
 const WORDS = [
     {
@@ -44,27 +45,17 @@ function getRandWords(point) {
     return randArr
 }
 
-function putNullWords() {
-    var i = 0
-    while (WORDS[point].leng > i) {
-        replyWord[i] = "-"
-        i++
-    }
-}
+
 
 const confusedArr = getRandWords(point)
-
 export default function Game() {
-    const [words, setWords] = useState([]);
 
-    function deleteElementFromWords(index) {
-        setWords(words.filter(obj => obj.index !== index));
-    }
 
     const Word = (props) => {
+
         return (
             < TouchableOpacity
-                key={props.index} style={styles.button2}
+                style={styles.button2}
                 onPress={() => deleteElementFromWords(props.index)}>
                 <Text style={styles.word2}>{props.item} </Text>
             </TouchableOpacity >
@@ -75,17 +66,49 @@ export default function Game() {
         return (
             confusedArr.map((item, index) => (
                 <TouchableOpacity key={index} style={styles.button1}
-                    onPress={() => setWords([...words, <Word item={item} index={index} />])}>
+                    onPress={() => EditItem(index, item)}>
                     <Text style={styles.word1}>{item} </Text>
                 </TouchableOpacity>
             ))
         )
     }
+    const [words, setWords] = useState([]);
 
-    console.log(words)
+    const putNullWords = () => {
+        var i = 0
+        while (WORDS[point].leng > i) {
+            words[i] = <Word index={i} item={"-"} />
+            replyWord[i] = words[i]
+            i++
+        }
+
+    }
+
+
+    function deleteElementFromWords(index) {
+        setWords(words.filter(obj => obj.index !== index));
+    }
+
+    const EditItem = (index, item) => {
+        replyWord[index] = <Word index={index} item={item} />;
+        setWords([...replyWord])
+
+        console.log("words")
+        console.log(words)
+
+        console.log("arr")
+        console.log(replyWord)
+
+    }
+    if (chek === false) {
+        putNullWords()
+        console.log("putNullWords")
+    }
+    chek = true
+
+    //console.log(words)
     return (
         <SafeAreaView style={styles.container}>
-
             <View style={styles.box1}>
                 <ConfusedWord />
             </View>
@@ -93,6 +116,9 @@ export default function Game() {
             <View style={styles.box2}>
                 {words.map(elem => elem)}
             </View>
+
+
+
 
             <StatusBar
                 animated={true}

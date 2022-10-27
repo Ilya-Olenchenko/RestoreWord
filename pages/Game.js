@@ -45,80 +45,100 @@ function getRandWords(point) {
     return randArr
 }
 
-
-
-const confusedArr = getRandWords(point)
 export default function Game() {
-
+    const confusedArr = getRandWords(point)
+    const ConfusedWord = (props) => {
+        return (
+            <TouchableOpacity style={styles.button1}
+                onPress={() => EditItem(props.index, props.item)}>
+                <Text style={styles.word1}>{props.item} </Text>
+            </TouchableOpacity>
+        )
+    }
 
     const Word = (props) => {
-
         return (
-            < TouchableOpacity
-                style={styles.button2}
-                onPress={() => deleteElementFromWords(props.index)}>
+            < TouchableOpacity style={styles.button2}
+                onPress={() => deleteElementFromWords(props.index, props.item)}>
                 <Text style={styles.word2}>{props.item} </Text>
             </TouchableOpacity >
         )
     }
 
-    const ConfusedWord = (props) => {
-        return (
-            confusedArr.map((item, index) => (
-                <TouchableOpacity key={index} style={styles.button1}
-                    onPress={() => EditItem(index, item)}>
-                    <Text style={styles.word1}>{item} </Text>
-                </TouchableOpacity>
-            ))
-        )
-    }
     const [words, setWords] = useState([]);
+    const [randomwords, setRandomWords] = useState([]);
 
     const putNullWords = () => {
         var i = 0
         while (WORDS[point].leng > i) {
-            words[i] = <Word index={i} item={"-"} />
+            words[i] = <Word index={i} item={'-'} />
             replyWord[i] = words[i]
             i++
         }
-
     }
 
-
-    function deleteElementFromWords(index) {
-        setWords(words.filter(obj => obj.index !== index));
+    const putRandomWords = () => {
+        confusedArr.map((item, index) => (
+            randomwords[index] = <ConfusedWord index={index} item={item} />
+        ))
     }
 
-    const EditItem = (index, item) => {
-        replyWord[index] = <Word index={index} item={item} />;
+    function deleteElementFromWords(index, item) {
+        replyWord[index] = <Word index={index} item={'-'} />;
         setWords([...replyWord])
+
+        randomwords[index] = <ConfusedWord index={index} item={item} />;
+        setRandomWords([...randomwords])
 
         console.log("words")
         console.log(words)
 
         console.log("arr")
         console.log(replyWord)
-
     }
+
+    const EditItem = (index, item) => {
+        var i = 0
+        const temp = <Word index={i} item={'-'} />
+        randomwords[index] = <ConfusedWord index={index} item={'-'} />;
+        setRandomWords([...randomwords])
+
+        while (replyWord.length > i) {
+            if (replyWord. === temp) {
+                console.log("true")
+                //replyWord[i] = <ConfusedWord index={index} item={item} />;
+            }
+            console.log(replyWord[i])
+            //console.log(<Word index={i} item={"-"} />)
+            i++
+        }
+        //replyWord[index] = <Word index={index} item={item} />;
+        setWords([...replyWord])
+
+        // console.log("words")
+        // console.log(words)
+
+        // console.log("arr")
+        // console.log(replyWord)
+    }
+
     if (chek === false) {
+        putRandomWords()
+        console.log("putRandomWords")
         putNullWords()
         console.log("putNullWords")
     }
     chek = true
-
-    //console.log(words)
     return (
         <SafeAreaView style={styles.container}>
+
             <View style={styles.box1}>
-                <ConfusedWord />
+                {randomwords.map(elem => elem)}
             </View>
 
             <View style={styles.box2}>
                 {words.map(elem => elem)}
             </View>
-
-
-
 
             <StatusBar
                 animated={true}

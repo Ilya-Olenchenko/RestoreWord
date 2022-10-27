@@ -6,7 +6,8 @@ export const styles = StyleSheet.create({
         backgroundColor: 'white',
         justifyContent: 'center',
         alignContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: 'whitesmoke'
     },
     box1: {
         height: 70,

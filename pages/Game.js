@@ -4,6 +4,7 @@ import { styles } from '../styles/game'
 
 var point = 0
 var chek = false
+let number = 0
 const replyWord = []
 const WORDS = [
     {
@@ -52,13 +53,14 @@ export default function Game() {
             <TouchableOpacity style={styles.button1}
                 onPress={() => EditItem(props.index, props.item)}>
                 <Text style={styles.word1}>{props.item} </Text>
+                {console.log("props.index: " + props.index,)}
             </TouchableOpacity>
         )
     }
 
     const Word = (props) => {
         return (
-            < TouchableOpacity style={styles.button2}
+            <TouchableOpacity style={styles.button2}
                 onPress={() => deleteElementFromWords(props.index, props.item)}>
                 <Text style={styles.word2}>{props.item} </Text>
             </TouchableOpacity >
@@ -84,42 +86,29 @@ export default function Game() {
     }
 
     function deleteElementFromWords(index, item) {
-        replyWord[index] = <Word index={index} item={'-'} />;
-        setWords([...replyWord])
+        console.log("index: " + index)
+        if (number >= 0) {
+            replyWord[index] = <Word index={index} item={'-'} />;
+            setWords([...replyWord])
 
-        randomwords[index] = <ConfusedWord index={index} item={item} />;
-        setRandomWords([...randomwords])
-
-        console.log("words")
-        console.log(words)
-
-        console.log("arr")
-        console.log(replyWord)
+            randomwords[index] = <ConfusedWord index={index} item={item} />;
+            setRandomWords([...randomwords])
+            number--
+            console.log("number: " + number)
+        }
     }
 
-    const EditItem = (index, item) => {
-        var i = 0
-        const temp = <Word index={i} item={'-'} />
-        randomwords[index] = <ConfusedWord index={index} item={'-'} />;
-        setRandomWords([...randomwords])
+    const EditItem = (index2, item2) => {
+        if (number < WORDS[point].leng) {
+            randomwords[index2] = <ConfusedWord index={index2} item={'-'} />;
+            setRandomWords([...randomwords])
 
-        while (replyWord.length > i) {
-            if (replyWord. === temp) {
-                console.log("true")
-                //replyWord[i] = <ConfusedWord index={index} item={item} />;
-            }
-            console.log(replyWord[i])
-            //console.log(<Word index={i} item={"-"} />)
-            i++
+            replyWord[number] = <Word index={index2} item={item2} />
+            number++
+
+            setWords([...replyWord])
+            console.log("number: " + number)
         }
-        //replyWord[index] = <Word index={index} item={item} />;
-        setWords([...replyWord])
-
-        // console.log("words")
-        // console.log(words)
-
-        // console.log("arr")
-        // console.log(replyWord)
     }
 
     if (chek === false) {
@@ -129,9 +118,9 @@ export default function Game() {
         console.log("putNullWords")
     }
     chek = true
+
     return (
         <SafeAreaView style={styles.container}>
-
             <View style={styles.box1}>
                 {randomwords.map(elem => elem)}
             </View>

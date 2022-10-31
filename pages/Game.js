@@ -49,22 +49,43 @@ function getRandWords(point) {
 export default function Game() {
     const confusedArr = getRandWords(point)
     const ConfusedWord = (props) => {
-        return (
-            <TouchableOpacity style={styles.button1}
-                onPress={() => EditItem(props.index, props.item)}>
-                <Text style={styles.word1}>{props.item} </Text>
-                {console.log("props.index: " + props.index,)}
-            </TouchableOpacity>
-        )
+        if (props.item !== '-') {
+            return (
+                <TouchableOpacity key={props.index} style={styles.button1}
+                    onPress={() => EditItem(props.index, props.item)}>
+                    <Text style={styles.word1}>{props.item} </Text>
+                    {console.log("props.index ConfusedWord: " + props.index,)}
+                </TouchableOpacity>
+            )
+        }
+        else {
+            return (
+                <TouchableOpacity key={props.index} style={styles.button1}>
+                    <Text style={styles.word1}>{props.item} </Text>
+                    {console.log("props.index ConfusedWord: " + props.index,)}
+                </TouchableOpacity>
+            )
+        }
     }
 
     const Word = (props) => {
-        return (
-            <TouchableOpacity style={styles.button2}
-                onPress={() => deleteElementFromWords(props.index, props.item)}>
-                <Text style={styles.word2}>{props.item} </Text>
-            </TouchableOpacity >
-        )
+        if (props.item !== '-') {
+            return (
+                <TouchableOpacity key={props.index} style={styles.button2}
+                    onPress={() => deleteElementFromWords(props.index, props.item)}>
+                    <Text style={styles.word2}>{props.item} </Text>
+                    {console.log("props.index Word: " + props.index,)}
+                </TouchableOpacity >
+            )
+        }
+        else {
+            return (
+                <TouchableOpacity key={props.index} style={styles.button2}>
+                    <Text style={styles.word2}>{props.item} </Text>
+                    {console.log("props.index Word: " + props.index,)}
+                </TouchableOpacity >
+            )
+        }
     }
 
     const [words, setWords] = useState([]);
@@ -86,29 +107,30 @@ export default function Game() {
     }
 
     function deleteElementFromWords(index, item) {
+        //if (number > 0) {
         console.log("index: " + index)
-        if (number >= 0) {
-            replyWord[index] = <Word index={index} item={'-'} />;
-            setWords([...replyWord])
+        number--
+        replyWord[index] = <Word index={index} item={'-'} />;
+        setWords([...replyWord])
 
-            randomwords[index] = <ConfusedWord index={index} item={item} />;
-            setRandomWords([...randomwords])
-            number--
-            console.log("number: " + number)
-        }
+        randomwords[index] = <ConfusedWord index={index} item={item} />;
+        setRandomWords([...randomwords])
+
+        console.log("number: " + number)
+        //}
     }
 
     const EditItem = (index2, item2) => {
-        if (number < WORDS[point].leng) {
-            randomwords[index2] = <ConfusedWord index={index2} item={'-'} />;
-            setRandomWords([...randomwords])
+        //if (number < WORDS[point].leng) {
+        randomwords[index2] = <ConfusedWord index={index2} item={'-'} />;
+        setRandomWords([...randomwords])
 
-            replyWord[number] = <Word index={index2} item={item2} />
-            number++
+        replyWord[number] = <Word index={number} item={item2} />
+        number++
 
-            setWords([...replyWord])
-            console.log("number: " + number)
-        }
+        setWords([...replyWord])
+        console.log("number: " + number)
+        //}
     }
 
     if (chek === false) {
@@ -137,3 +159,5 @@ export default function Game() {
         </SafeAreaView >
     );
 }
+//додати кнопку "назад"
+//поправити нумбер

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Text, View, StatusBar, SafeAreaView, TouchableOpacity } from 'react-native'
+import { Text, View, StatusBar, SafeAreaView, TouchableOpacity, FlatList } from 'react-native'
 import { styles } from '../styles/game'
 
 var point = 0
 var chek = false
 let number = 0
-const replyWord = []
+
 const WORDS = [
     {
         id: 0,
@@ -48,107 +48,55 @@ function getRandWords(point) {
 
 export default function Game() {
     const confusedArr = getRandWords(point)
-    const ConfusedWord = (props) => {
-        if (props.item !== '-') {
-            return (
-                <TouchableOpacity key={props.index} style={styles.button1}
-                    onPress={() => EditItem(props.index, props.item)}>
-                    <Text style={styles.word1}>{props.item} </Text>
-                    {console.log("props.index ConfusedWord: " + props.index,)}
-                </TouchableOpacity>
-            )
-        }
-        else {
-            return (
-                <TouchableOpacity key={props.index} style={styles.button1}>
-                    <Text style={styles.word1}>{props.item} </Text>
-                    {console.log("props.index ConfusedWord: " + props.index,)}
-                </TouchableOpacity>
-            )
-        }
-    }
-
-    const Word = (props) => {
-        if (props.item !== '-') {
-            return (
-                <TouchableOpacity key={props.index} style={styles.button2}
-                    onPress={() => deleteElementFromWords(props.index, props.item)}>
-                    <Text style={styles.word2}>{props.item} </Text>
-                    {console.log("props.index Word: " + props.index,)}
-                </TouchableOpacity >
-            )
-        }
-        else {
-            return (
-                <TouchableOpacity key={props.index} style={styles.button2}>
-                    <Text style={styles.word2}>{props.item} </Text>
-                    {console.log("props.index Word: " + props.index,)}
-                </TouchableOpacity >
-            )
-        }
-    }
-
     const [words, setWords] = useState([]);
     const [randomwords, setRandomWords] = useState([]);
 
     const putNullWords = () => {
+        //putRandomWords
+        confusedArr.map((item, index) => (
+            randomwords[index] = item
+        ))
+        //putRandomWords
         var i = 0
         while (WORDS[point].leng > i) {
-            words[i] = <Word index={i} item={'-'} />
-            replyWord[i] = words[i]
+            words[i] = '-'
             i++
         }
     }
 
-    const putRandomWords = () => {
-        confusedArr.map((item, index) => (
-            randomwords[index] = <ConfusedWord index={index} item={item} />
-        ))
-    }
-
-    function deleteElementFromWords(index, item) {
-        //if (number > 0) {
-        console.log("index: " + index)
-        number--
-        replyWord[index] = <Word index={index} item={'-'} />;
-        setWords([...replyWord])
-
-        randomwords[index] = <ConfusedWord index={index} item={item} />;
-        setRandomWords([...randomwords])
-
-        console.log("number: " + number)
-        //}
-    }
-
-    const EditItem = (index2, item2) => {
-        //if (number < WORDS[point].leng) {
-        randomwords[index2] = <ConfusedWord index={index2} item={'-'} />;
-        setRandomWords([...randomwords])
-
-        replyWord[number] = <Word index={number} item={item2} />
-        number++
-
-        setWords([...replyWord])
-        console.log("number: " + number)
-        //}
+    const EditItem = (index, item) => {
+        let i = 0
+        while (WORDS[point].leng < i) {
+            console.log(i)
+            i++
+        }
     }
 
     if (chek === false) {
-        putRandomWords()
-        console.log("putRandomWords")
         putNullWords()
-        console.log("putNullWords")
+        console.log("putNullWords-putRandomWords")
     }
     chek = true
-
+    console.log(randomwords)
+    console.log(words)
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.box1}>
-                {randomwords.map(elem => elem)}
+                <FlatList horizontal={true} data={randomwords} renderItem={({ index, item }) => (
+                    <TouchableOpacity key={index} style={styles.button1}
+                        onPress={() => EditElementFromRandomwords(index, item)}>
+                        <Text style={styles.word1}>{item} </Text>
+                    </TouchableOpacity>
+                )} />
             </View>
 
-            <View style={styles.box2}>
-                {words.map(elem => elem)}
+            <View style={styles.box1}>
+                <FlatList horizontal={true} data={words} renderItem={({ index, item }) => (
+                    <TouchableOpacity key={index} style={styles.button1}
+                        onPress={() => deleteElementFromWords(index, item)}>
+                        <Text style={styles.word1}>{item} </Text>
+                    </TouchableOpacity>
+                )} />
             </View>
 
             <StatusBar

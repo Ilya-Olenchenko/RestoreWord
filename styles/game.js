@@ -10,10 +10,8 @@ export const styles = StyleSheet.create({
         backgroundColor: 'whitesmoke'
     },
     box1: {
-        height: 70,
-        width: '99%',
+        height: 60,
         marginBottom: 10,
-        flexDirection: 'row',
         justifyContent: 'center',
         alignContent: 'center',
         alignItems: 'center',

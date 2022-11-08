@@ -1,11 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, StatusBar, SafeAreaView, TouchableOpacity, FlatList } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { styles } from '../styles/game'
-
-var point = 0
-var chek = false
-let number = 0
-
 const WORDS = [
     {
         id: 0,
@@ -29,58 +25,108 @@ const WORDS = [
     }
 ]
 
-function shuffle(array) {
-    let currentIndex = array.length, randomIndex;
-    while (currentIndex != 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
-        [array[currentIndex], array[randomIndex]] = [
-            array[randomIndex], array[currentIndex]];
-    }
-    return array;
-}
-
-function getRandWords(point) {
-    const randArr = WORDS[point].word.split('')
-    shuffle(randArr)
-    return randArr
-}
 
 export default function Game() {
-    const confusedArr = getRandWords(point)
+    const [level, setLevel] = useState('');
     const [words, setWords] = useState([]);
     const [randomwords, setRandomWords] = useState([]);
+    const load = async () => {
+        try {
+            let level = await AsyncStorage.getItem('key_level');
+            if (level !== null) {
+                setLevel(parseInt(level, 10));
+            }
+            console.log(level)
+        } catch (err) {
+            alert(err);
+        }
+    }
 
-    const putNullWords = () => {
-        //putRandomWords
-        confusedArr.map((item, index) => (
-            randomwords[index] = item
-        ))
-        //putRandomWords
+
+    function shuffle(array) {
+        let currentIndex = array.length, randomIndex;
+        while (currentIndex != 0) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+            [array[currentIndex], array[randomIndex]] = [
+                array[randomIndex], array[currentIndex]];
+        }
+        return array;
+    }
+    function getRandWords() {
+        const randArr = WORDS[level].word.split('')
+        shuffle(randArr)
+        return randArr
+    }
+
+    function checking(words) {
+        let chek = 0
+        let i = 0
+        while (WORDS[level].leng > i) {
+            if (words[i] === WORDS[level].word[i]) {
+                chek += 1
+            }
+            i++
+        }
+        if (chek === WORDS[level].leng)
+            console.log("WIN")
+    }
+
+
+    function putNullWords() {
+        const confusedArr = getRandWords(level)
+        setRandomWords(confusedArr)
+        words.length = 0
         var i = 0
-        while (WORDS[point].leng > i) {
+        while (WORDS[level].leng > i) {
             words[i] = '-'
             i++
         }
+        return 0
     }
 
-    const EditItem = (index, item) => {
-        let i = 0
-        while (WORDS[point].leng < i) {
-            console.log(i)
-            i++
+    const EditElementFromRandomwords = (index, item) => {
+        if (item !== '-') {
+            let i = 0
+            while (WORDS[level].leng > i) {
+                if (words[i] === '-') {
+                    words[i] = item
+                    randomwords[index] = '-'
+                    setRandomWords([...randomwords])
+                    setWords([...words])
+                    break
+                }
+                i++
+            }
+            checking(words)
+        }
+    }
+    const DeleteElementFromWords = (index, item) => {
+        if (item !== '-') {
+            let i = 0
+            while (WORDS[level].leng > i) {
+                if (randomwords[i] === '-') {
+                    words[index] = '-'
+                    randomwords[i] = item
+                    setWords([...words])
+                    setRandomWords([...randomwords])
+                    break
+                }
+                i++
+            }
         }
     }
 
-    if (chek === false) {
-        putNullWords()
-        console.log("putNullWords-putRandomWords")
-    }
-    chek = true
-    console.log(randomwords)
-    console.log(words)
+    useEffect(() => {
+        load();
+    }, []);
+
     return (
         <SafeAreaView style={styles.container}>
+            <TouchableOpacity onPress={() => putNullWords()}>
+                <Text>Старт</Text>
+            </TouchableOpacity>
+
             <View style={styles.box1}>
                 <FlatList horizontal={true} data={randomwords} renderItem={({ index, item }) => (
                     <TouchableOpacity key={index} style={styles.button1}
@@ -93,7 +139,7 @@ export default function Game() {
             <View style={styles.box1}>
                 <FlatList horizontal={true} data={words} renderItem={({ index, item }) => (
                     <TouchableOpacity key={index} style={styles.button1}
-                        onPress={() => deleteElementFromWords(index, item)}>
+                        onPress={() => DeleteElementFromWords(index, item)}>
                         <Text style={styles.word1}>{item} </Text>
                     </TouchableOpacity>
                 )} />

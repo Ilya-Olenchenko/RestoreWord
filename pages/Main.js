@@ -1,7 +1,9 @@
 import React from 'react'
 import { Text, View, StatusBar, SafeAreaView, TouchableOpacity } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/core'
 import { styles } from '../styles/main'
+
 
 export default function Main() {
     const navigation = useNavigation()
@@ -11,7 +13,7 @@ export default function Main() {
             <View style={styles.box}>
                 <TouchableOpacity style={styles.textbutton} onPress={() => navigation.navigate('Game')}>
                     <Text style={styles.textmain}>
-                        Старт
+                        Грати
                     </Text>
                 </TouchableOpacity>
 

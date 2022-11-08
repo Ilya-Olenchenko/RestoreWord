@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, StatusBar, SafeAreaView, TouchableOpacity, FlatList } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { styles } from '../styles/game'
+
 const WORDS = [
     {
         id: 0,
@@ -25,23 +26,9 @@ const WORDS = [
     }
 ]
 
-
-export default function Game() {
-    const [level, setLevel] = useState('');
+export default function Game({ level }) {
     const [words, setWords] = useState([]);
     const [randomwords, setRandomWords] = useState([]);
-    const load = async () => {
-        try {
-            let level = await AsyncStorage.getItem('key_level');
-            if (level !== null) {
-                setLevel(parseInt(level, 10));
-            }
-            console.log(level)
-        } catch (err) {
-            alert(err);
-        }
-    }
-
 
     function shuffle(array) {
         let currentIndex = array.length, randomIndex;
@@ -53,6 +40,7 @@ export default function Game() {
         }
         return array;
     }
+
     function getRandWords() {
         const randArr = WORDS[level].word.split('')
         shuffle(randArr)
@@ -71,7 +59,6 @@ export default function Game() {
         if (chek === WORDS[level].leng)
             console.log("WIN")
     }
-
 
     function putNullWords() {
         const confusedArr = getRandWords(level)
@@ -101,6 +88,7 @@ export default function Game() {
             checking(words)
         }
     }
+
     const DeleteElementFromWords = (index, item) => {
         if (item !== '-') {
             let i = 0
@@ -117,10 +105,6 @@ export default function Game() {
         }
     }
 
-    useEffect(() => {
-        load();
-    }, []);
-
     return (
         <SafeAreaView style={styles.container}>
             <TouchableOpacity onPress={() => putNullWords()}>
@@ -136,7 +120,7 @@ export default function Game() {
                 )} />
             </View>
 
-            <View style={styles.box1}>
+            <View style={styles.box1}>0
                 <FlatList horizontal={true} data={words} renderItem={({ index, item }) => (
                     <TouchableOpacity key={index} style={styles.button1}
                         onPress={() => DeleteElementFromWords(index, item)}>
@@ -153,5 +137,3 @@ export default function Game() {
         </SafeAreaView >
     );
 }
-//додати кнопку "назад"
-//поправити нумбер

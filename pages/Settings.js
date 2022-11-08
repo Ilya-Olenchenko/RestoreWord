@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { styles } from '../styles/settings'
 
 export default function Settings() {
-    const [level, setLevel] = useState('');
+    //const [level, setLevel] = useState('');
 
     const save = async (item) => {
         try {

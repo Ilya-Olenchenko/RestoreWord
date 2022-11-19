@@ -2,27 +2,113 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, StatusBar, SafeAreaView, TouchableOpacity, FlatList } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { styles } from '../styles/game'
-const WORDS = [
+
+let number = 0
+
+const WORDS0 = [
     {
         id: 0,
         word: 'радіо',
         leng: 5
     },
     {
-        id: 1,
+        id: 2,
         word: 'слово',
         leng: 5
     },
     {
-        id: 2,
-        word: 'собака',
+        id: 3,
+        word: 'буда',
+        leng: 4
+    },
+    {
+        id: 4,
+        word: 'аміак',
+        leng: 5
+    },
+    {
+        id: 5,
+        word: 'білка',
+        leng: 5
+    },
+    {
+        id: 6,
+        word: 'горщик',
         leng: 6
     },
     {
-        id: 3,
-        word: 'антологія',
-        leng: 9
+        id: 7,
+        word: 'десерт',
+        leng: 6
+    },
+    {
+        id: 8,
+        word: 'князь',
+        leng: 5
+    },
+    {
+        id: 9,
+        word: 'гієна',
+        leng: 5
+    },
+    {
+        id: 10,
+        word: 'серп',
+        leng: 4
     }
+]
+
+const WORDS1 = [
+    {
+        id: 1,
+        word: 'лиходійка',
+        leng: 9
+    },
+    {
+        id: 2,
+        word: 'струмок',
+        leng: 7
+    },
+    {
+        id: 3,
+        word: 'балаган',
+        leng: 7
+    },
+    {
+        id: 4,
+        word: 'вермішель',
+        leng: 9
+    },
+    {
+        id: 5,
+        word: 'сорочка',
+        leng: 7
+    },
+    {
+        id: 6,
+        word: 'альпініст',
+        leng: 9
+    },
+    {
+        id: 7,
+        word: 'андероль',
+        leng: 8
+    },
+    {
+        id: 8,
+        word: 'лавочник',
+        leng: 8
+    },
+    {
+        id: 9,
+        word: 'портфель',
+        leng: 8
+    },
+    {
+        id: 10,
+        word: 'агроном',
+        leng: 7
+    },
 ]
 
 
@@ -30,6 +116,7 @@ export default function Game() {
     const [level, setLevel] = useState('');
     const [words, setWords] = useState([]);
     const [randomwords, setRandomWords] = useState([]);
+    const [buttonstart, setButtonStart] = useState('flex');
     const load = async () => {
         try {
             let level = await AsyncStorage.getItem('key_level');
@@ -53,67 +140,143 @@ export default function Game() {
         }
         return array;
     }
+
     function getRandWords() {
-        const randArr = WORDS[level].word.split('')
-        shuffle(randArr)
-        return randArr
+        if (level === 0) {
+            const randArr = WORDS0[number].word.split('')
+            shuffle(randArr)
+            return randArr
+        }
+        if (level === 1) {
+            const randArr = WORDS1[number].word.split('')
+            shuffle(randArr)
+            return randArr
+        }
     }
 
     function checking(words) {
         let chek = 0
         let i = 0
-        while (WORDS[level].leng > i) {
-            if (words[i] === WORDS[level].word[i]) {
-                chek += 1
+        if (level === 0) {
+            while (WORDS0[number].leng > i) {
+                if (words[i] === WORDS0[number].word[i]) {
+                    chek += 1
+                }
+                i++
             }
-            i++
+            if (chek === WORDS0[number].leng) {
+                number++
+                if (number === 10)
+                    console.log("FINAL")
+                else
+                    putNullWords()
+                console.log("number: " + number)
+            }
+
         }
-        if (chek === WORDS[level].leng)
-            console.log("WIN")
+
+        if (level === 1) {
+            while (WORDS1[number].leng > i) {
+                if (words[i] === WORDS1[number].word[i]) {
+                    chek += 1
+                }
+                i++
+            }
+            if (chek === WORDS1[number].leng) {
+                number++
+                if (number === 10)
+                    console.log("FINAL")
+                else
+                    putNullWords()
+                console.log("number: " + number)
+            }
+        }
     }
 
 
     function putNullWords() {
-        const confusedArr = getRandWords(level)
+        setButtonStart('none')
+        //shuffle(WORDS0)
+        //shuffle(WORDS1)
+        const confusedArr = getRandWords()
         setRandomWords(confusedArr)
         words.length = 0
         var i = 0
-        while (WORDS[level].leng > i) {
-            words[i] = '-'
-            i++
+        if (level === 0) {
+            while (WORDS0[number].leng > i) {
+                words[i] = '-'
+                i++
+            }
         }
+        if (level === 1) {
+            while (WORDS1[number].leng > i) {
+                words[i] = '-'
+                i++
+            }
+        }
+        setWords([...words])
         return 0
     }
 
     const EditElementFromRandomwords = (index, item) => {
         if (item !== '-') {
             let i = 0
-            while (WORDS[level].leng > i) {
-                if (words[i] === '-') {
-                    words[i] = item
-                    randomwords[index] = '-'
-                    setRandomWords([...randomwords])
-                    setWords([...words])
-                    break
+            if (level === 0) {
+                while (WORDS0[number].leng > i) {
+                    if (words[i] === '-') {
+                        words[i] = item
+                        randomwords[index] = '-'
+                        setRandomWords([...randomwords])
+                        setWords([...words])
+                        break
+                    }
+                    i++
                 }
-                i++
+                checking(words)
             }
-            checking(words)
+            if (level === 1) {
+                while (WORDS1[number].leng > i) {
+                    if (words[i] === '-') {
+                        words[i] = item
+                        randomwords[index] = '-'
+                        setRandomWords([...randomwords])
+                        setWords([...words])
+                        break
+                    }
+                    i++
+                }
+                checking(words)
+            }
         }
     }
     const DeleteElementFromWords = (index, item) => {
         if (item !== '-') {
             let i = 0
-            while (WORDS[level].leng > i) {
-                if (randomwords[i] === '-') {
-                    words[index] = '-'
-                    randomwords[i] = item
-                    setWords([...words])
-                    setRandomWords([...randomwords])
-                    break
+            if (level === 0) {
+                while (WORDS0[number].leng > i) {
+                    if (randomwords[i] === '-') {
+                        words[index] = '-'
+                        randomwords[i] = item
+                        setWords([...words])
+                        setRandomWords([...randomwords])
+                        break
+                    }
+                    i++
                 }
-                i++
             }
+            if (level === 1) {
+                while (WORDS1[number].leng > i) {
+                    if (randomwords[i] === '-') {
+                        words[index] = '-'
+                        randomwords[i] = item
+                        setWords([...words])
+                        setRandomWords([...randomwords])
+                        break
+                    }
+                    i++
+                }
+            }
+
         }
     }
 
@@ -123,7 +286,7 @@ export default function Game() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <TouchableOpacity onPress={() => putNullWords()}>
+            <TouchableOpacity style={{ display: buttonstart }} onPress={() => putNullWords()}>
                 <Text>Старт</Text>
             </TouchableOpacity>
 
@@ -155,3 +318,4 @@ export default function Game() {
 }
 //додати кнопку "назад"
 //поправити нумбер
+

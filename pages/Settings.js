@@ -2,29 +2,19 @@ import { Text, View, StatusBar, SafeAreaView, TouchableOpacity } from 'react-nat
 import React, { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { styles } from '../styles/settings'
+import { useNavigation } from '@react-navigation/core'
 
 export default function Settings() {
-    const [level, setLevel] = useState('');
+    const navigation = useNavigation()
 
     const save = async (item) => {
         try {
-            //remove()
-            //setLevel(item)
             await AsyncStorage.setItem('key_level', item);
+            navigation.navigate('Main')
         } catch (err) {
             alert(err);
         }
     }
-
-    // const remove = async () => {
-    //     try {
-    //         await AsyncStorage.setLevel('key_level', level);
-    //     } catch (err) {
-    //         alert(err)
-    //     } finally {
-    //         setLevel();
-    //     }
-    // }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -39,11 +29,7 @@ export default function Settings() {
                     <Text style={styles.word}>Легко</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button} onPress={() => save('2')}>
-                    <Text style={styles.word}>Нормально</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.button} onPress={() => save('3')}>
+                <TouchableOpacity style={styles.button} onPress={() => save('1')}>
                     <Text style={styles.word}>Важко</Text>
                 </TouchableOpacity>
             </View>

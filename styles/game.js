@@ -27,25 +27,23 @@ export const styles = StyleSheet.create({
     },
     button1: {
         width: 30,
-        width: 30,
         borderWidth: 1,
         borderRadius: 5,
         margin: 5,
         alignItems: 'center',
-        paddingLeft: 5
+        paddingLeft: 1
     },
     button2: {
         width: 30,
-        width: 30,
         borderWidth: 1,
         borderRadius: 5,
         margin: 5,
         alignItems: 'center',
-        paddingLeft: 5
+        paddingLeft: 1
     },
     word1: {
         fontSize: 30,
-        fontFamily: 'robot-media'
+        fontFamily: 'robot-media',
 
     },
     word2: {

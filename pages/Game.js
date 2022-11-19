@@ -141,7 +141,6 @@ export default function Game() {
         return array;
     }
 
-
     function getRandWords() {
         if (level === 0) {
             const randArr = WORDS0[number].word.split('')
@@ -154,187 +153,169 @@ export default function Game() {
             return randArr
         }
     }
-    if (level === 1) {
-        const randArr = WORDS1[number].word.split('')
-        shuffle(randArr)
-        return randArr
-    }
-}
 
-function checking(words) {
-    let chek = 0
-    let i = 0
-    if (level === 0) {
-        while (WORDS0[number].leng > i) {
-            if (words[i] === WORDS0[number].word[i]) {
-                chek += 1
-            }
-            i++
-        }
-        if (chek === WORDS0[number].leng) {
-            number++
-            if (number === 10)
-                console.log("FINAL")
-            else
-                putNullWords()
-            console.log("number: " + number)
-        }
-
-    }
-
-    if (level === 1) {
-        while (WORDS1[number].leng > i) {
-            if (words[i] === WORDS1[number].word[i]) {
-                chek += 1
-            }
-            i++
-        }
-        if (chek === WORDS1[number].leng) {
-            number++
-            if (number === 10)
-                console.log("FINAL")
-            else
-                putNullWords()
-            console.log("number: " + number)
-        }
-    }
-}
-
-if (level === 1) {
-    while (WORDS1[number].leng > i) {
-        if (words[i] === WORDS1[number].word[i]) {
-            chek += 1
-        }
-        i++
-    }
-    if (chek === WORDS1[number].leng) {
-        number++
-        if (number === 10)
-            console.log("FINAL")
-        else
-            putNullWords()
-        console.log("number: " + number)
-    }
-}
-
-
-function putNullWords() {
-    setButtonStart('none')
-    //shuffle(WORDS0)
-    //shuffle(WORDS1)
-    const confusedArr = getRandWords()
-    setRandomWords(confusedArr)
-    words.length = 0
-    var i = 0
-    if (level === 0) {
-        while (WORDS0[number].leng > i) {
-            words[i] = '-'
-            i++
-        }
-    }
-    if (level === 1) {
-        while (WORDS1[number].leng > i) {
-            words[i] = '-'
-            i++
-        }
-    }
-    setWords([...words])
-    return 0
-}
-
-const EditElementFromRandomwords = (index, item) => {
-    if (item !== '-') {
+    function checking(words) {
+        let chek = 0
         let i = 0
         if (level === 0) {
             while (WORDS0[number].leng > i) {
-                if (words[i] === '-') {
-                    words[i] = item
-                    randomwords[index] = '-'
-                    setRandomWords([...randomwords])
-                    setWords([...words])
-                    break
+                if (words[i] === WORDS0[number].word[i]) {
+                    chek += 1
                 }
                 i++
             }
-            checking(words)
+            if (chek === WORDS0[number].leng) {
+                number++
+                if (number === 10)
+                    console.log("FINAL")
+                else
+                    putNullWords()
+                console.log("number: " + number)
+            }
+
         }
+
         if (level === 1) {
             while (WORDS1[number].leng > i) {
-                if (words[i] === '-') {
-                    words[i] = item
-                    randomwords[index] = '-'
-                    setRandomWords([...randomwords])
-                    setWords([...words])
-                    break
+                if (words[i] === WORDS1[number].word[i]) {
+                    chek += 1
                 }
                 i++
             }
-            checking(words)
+            if (chek === WORDS1[number].leng) {
+                number++
+                if (number === 10)
+                    console.log("FINAL")
+                else
+                    putNullWords()
+                console.log("number: " + number)
+            }
         }
     }
-}
 
-const DeleteElementFromWords = (index, item) => {
-    if (item !== '-') {
-        let i = 0
+
+    function putNullWords() {
+        setButtonStart('none')
+        //shuffle(WORDS0)
+        //shuffle(WORDS1)
+        const confusedArr = getRandWords()
+        setRandomWords(confusedArr)
+        words.length = 0
+        var i = 0
         if (level === 0) {
             while (WORDS0[number].leng > i) {
-                if (randomwords[i] === '-') {
-                    words[index] = '-'
-                    randomwords[i] = item
-                    setWords([...words])
-                    setRandomWords([...randomwords])
-                    break
-                }
+                words[i] = '-'
                 i++
             }
         }
         if (level === 1) {
             while (WORDS1[number].leng > i) {
-                if (randomwords[i] === '-') {
-                    words[index] = '-'
-                    randomwords[i] = item
-                    setWords([...words])
-                    setRandomWords([...randomwords])
-                    break
-                }
+                words[i] = '-'
                 i++
             }
         }
-
+        setWords([...words])
+        return 0
     }
 
+    const EditElementFromRandomwords = (index, item) => {
+        if (item !== '-') {
+            let i = 0
+            if (level === 0) {
+                while (WORDS0[number].leng > i) {
+                    if (words[i] === '-') {
+                        words[i] = item
+                        randomwords[index] = '-'
+                        setRandomWords([...randomwords])
+                        setWords([...words])
+                        break
+                    }
+                    i++
+                }
+                checking(words)
+            }
+            if (level === 1) {
+                while (WORDS1[number].leng > i) {
+                    if (words[i] === '-') {
+                        words[i] = item
+                        randomwords[index] = '-'
+                        setRandomWords([...randomwords])
+                        setWords([...words])
+                        break
+                    }
+                    i++
+                }
+                checking(words)
+            }
+        }
+    }
+    const DeleteElementFromWords = (index, item) => {
+        if (item !== '-') {
+            let i = 0
+            if (level === 0) {
+                while (WORDS0[number].leng > i) {
+                    if (randomwords[i] === '-') {
+                        words[index] = '-'
+                        randomwords[i] = item
+                        setWords([...words])
+                        setRandomWords([...randomwords])
+                        break
+                    }
+                    i++
+                }
+            }
+            if (level === 1) {
+                while (WORDS1[number].leng > i) {
+                    if (randomwords[i] === '-') {
+                        words[index] = '-'
+                        randomwords[i] = item
+                        setWords([...words])
+                        setRandomWords([...randomwords])
+                        break
+                    }
+                    i++
+                }
+            }
+
+        }
+    }
+
+    useEffect(() => {
+        load();
+    }, []);
+
+    return (
+        <SafeAreaView style={styles.container}>
+            <TouchableOpacity style={{ display: buttonstart }} onPress={() => putNullWords()}>
+                <Text>Старт</Text>
+            </TouchableOpacity>
+
+            <View style={styles.box1}>
+                <FlatList horizontal={true} data={randomwords} renderItem={({ index, item }) => (
+                    <TouchableOpacity key={index} style={styles.button1}
+                        onPress={() => EditElementFromRandomwords(index, item)}>
+                        <Text style={styles.word1}>{item} </Text>
+                    </TouchableOpacity>
+                )} />
+            </View>
+
+            <View style={styles.box1}>
+                <FlatList horizontal={true} data={words} renderItem={({ index, item }) => (
+                    <TouchableOpacity key={index} style={styles.button1}
+                        onPress={() => DeleteElementFromWords(index, item)}>
+                        <Text style={styles.word1}>{item} </Text>
+                    </TouchableOpacity>
+                )} />
+            </View>
+
+            <StatusBar
+                animated={true}
+                barStyle={'light-content'}
+                backgroundColor="#17153C"
+            />
+        </SafeAreaView >
+    );
 }
+//додати кнопку "назад"
+//поправити нумбер
 
-
-return (
-    <SafeAreaView style={styles.container}>
-        <TouchableOpacity style={{ display: buttonstart }} onPress={() => putNullWords()}>
-            <Text>Старт</Text>
-        </TouchableOpacity>
-
-        <View style={styles.box1}>
-            <FlatList horizontal={true} data={randomwords} renderItem={({ index, item }) => (
-                <TouchableOpacity key={index} style={styles.button1}
-                    onPress={() => EditElementFromRandomwords(index, item)}>
-                    <Text style={styles.word1}>{item} </Text>
-                </TouchableOpacity>
-            )} />
-        </View>
-
-        <View style={styles.box1}>0
-            <FlatList horizontal={true} data={words} renderItem={({ index, item }) => (
-                <TouchableOpacity key={index} style={styles.button1}
-                    onPress={() => DeleteElementFromWords(index, item)}>
-                    <Text style={styles.word1}>{item} </Text>
-                </TouchableOpacity>
-            )} />
-        </View>
-
-        <StatusBar
-            animated={true}
-            barStyle={'light-content'}
-            backgroundColor="#17153C"
-        />
-    </SafeAreaView >
-);

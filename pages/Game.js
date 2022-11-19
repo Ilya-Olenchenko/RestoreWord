@@ -216,7 +216,7 @@ if (level === 1) {
         console.log("number: " + number)
     }
 }
-}
+
 
 function putNullWords() {
     setButtonStart('none')
@@ -273,9 +273,6 @@ const EditElementFromRandomwords = (index, item) => {
         }
     }
 }
-}
-}
-    }
 
 const DeleteElementFromWords = (index, item) => {
     if (item !== '-') {
@@ -309,22 +306,6 @@ const DeleteElementFromWords = (index, item) => {
 
 }
 
-}
-if (level === 1) {
-    while (WORDS1[number].leng > i) {
-        if (randomwords[i] === '-') {
-            words[index] = '-'
-            randomwords[i] = item
-            setWords([...words])
-            setRandomWords([...randomwords])
-            break
-        }
-        i++
-    }
-}
-
-}
-    }
 
 return (
     <SafeAreaView style={styles.container}>
@@ -357,7 +338,3 @@ return (
         />
     </SafeAreaView >
 );
-}
-//додати кнопку "назад"
-//поправити нумбер
-

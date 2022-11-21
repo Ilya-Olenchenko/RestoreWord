@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StatusBar, SafeAreaView, TouchableOpacity, FlatList } from 'react-native'
+import { Text, View, StatusBar, SafeAreaView, TouchableOpacity, TouchableHighlight, FlatList } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { Stopwatch, Timer } from 'react-native-stopwatch-timer';
 import { useNavigation } from '@react-navigation/core'
 import { styles } from '../styles/game'
 
-let number = 0
+let number = 9
 
 const WORDS0 = [
     {
@@ -115,6 +116,9 @@ const WORDS1 = [
 export default function Game() {
     const navigation = useNavigation()
     const [level, setLevel] = useState('');
+    const [isTimerStart, setIsTimerStart] = useState(false);
+    const [resetTimer, setResetTimer] = useState(false);
+    const [timerDuration, setTimerDuration] = useState(60000);
     const [words, setWords] = useState([]);
     const [randomwords, setRandomWords] = useState([]);
     const [buttonstart, setButtonStart] = useState('flex');
@@ -289,6 +293,36 @@ export default function Game() {
         navigation.replace('Main')
     }
 
+    function final() {
+        navigation.replace('Final', number)
+    }
+
+
+    const Time = () => {
+        return (
+            <Timer
+                totalDuration={timerDuration}
+                secs
+                //msecs
+                //Час Тривалість
+                start={isTimerStart}
+                //To start
+                reset={resetTimer}
+                //Для скидання
+                //options={options}
+                //варіанти укладання
+                handleFinish={() => {
+                    setSafeAreaView('none')
+                    final()
+                }}
+            //може викликати функцію після закінчення часу
+            // getTime={(time) => {
+            //     console.log(time);
+            // }}
+            />
+        )
+    }
+
     useEffect(() => {
         load();
     }, []);
@@ -296,18 +330,34 @@ export default function Game() {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.container1}>
+
                 <View style={styles.backwordnumber}>
                     <Text>Вгадано слів: {number} з 10</Text>
                 </View>
+
+                <Time />
+
+                <TouchableHighlight
+                    onPress={() => {
+                        setIsTimerStart(false);
+                        setResetTimer(true);
+                    }}>
+                    <Text>RESET</Text>
+                </TouchableHighlight>
             </View>
 
             <View style={styles.container2}>
                 <View style={{ display: finalwindow }}>
-                    <Text>Ти пройшов гру!</Text>
+                    <Text>Вгадано всі слова!</Text>
                 </View>
+
                 <View style={{ display: safeareaview }}>
                     <TouchableOpacity style={[{ display: buttonstart }, styles.startButton]}
-                        onPress={() => putNullWords()}>
+                        onPress={() => {
+                            setIsTimerStart(!isTimerStart)
+                            setResetTimer(false)
+                            putNullWords()
+                        }}>
                         <Text style={styles.backText}>Старт</Text>
                     </TouchableOpacity>
 

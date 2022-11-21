@@ -7,9 +7,10 @@ import { useNavigation } from '@react-navigation/core'
 export default function Settings() {
     const navigation = useNavigation()
 
-    const save = async (item) => {
+    const save = async (level, time) => {
         try {
-            await AsyncStorage.setItem('key_level', item);
+            await AsyncStorage.setItem('key_level', level);
+            await AsyncStorage.setItem('key_time', time);
             navigation.navigate('Main')
         } catch (err) {
             alert(err);
@@ -25,11 +26,11 @@ export default function Settings() {
             </View>
 
             <View style={styles.box2}>
-                <TouchableOpacity style={styles.button} onPress={() => save('0')}>
+                <TouchableOpacity style={styles.button} onPress={() => save('0', '120')}>
                     <Text style={styles.word}>Легко</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button} onPress={() => save('1')}>
+                <TouchableOpacity style={styles.button} onPress={() => save('1', '60')}>
                     <Text style={styles.word}>Важко</Text>
                 </TouchableOpacity>
             </View>

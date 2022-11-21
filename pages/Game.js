@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StatusBar, SafeAreaView, TouchableOpacity, TouchableHighlight, FlatList } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { Stopwatch, Timer } from 'react-native-stopwatch-timer';
 import { useNavigation } from '@react-navigation/core'
 import { styles } from '../styles/game'
 
-let number = 9
-
+let number = 8
+let counter = 0
 const WORDS0 = [
     {
         id: 0,
@@ -116,9 +115,9 @@ const WORDS1 = [
 export default function Game() {
     const navigation = useNavigation()
     const [level, setLevel] = useState('');
-    const [isTimerStart, setIsTimerStart] = useState(false);
-    const [resetTimer, setResetTimer] = useState(false);
-    const [timerDuration, setTimerDuration] = useState(60000);
+    const [time, setTime] = useState('');
+    const [counterTextMM, setcounterTextMM] = useState('00');
+    const [counterTextSS, setcounterTextSS] = useState('00');
     const [words, setWords] = useState([]);
     const [randomwords, setRandomWords] = useState([]);
     const [buttonstart, setButtonStart] = useState('flex');
@@ -128,10 +127,12 @@ export default function Game() {
     const load = async () => {
         try {
             let level = await AsyncStorage.getItem('key_level');
-            if (level !== null) {
+            let time = await AsyncStorage.getItem('key_time');
+            if (level !== null && time !== null) {
                 setLevel(parseInt(level, 10));
+                setTime(parseInt(time, 10));
             }
-            console.log(level)
+            console.log(level, time)
         } catch (err) {
             alert(err);
         }
@@ -174,6 +175,7 @@ export default function Game() {
             if (chek === WORDS0[number].leng) {
                 number++
                 if (number === 10) {
+                    //counter = 61
                     setSafeAreaView('none')
                     setFinalWindow('flex')
                 }
@@ -192,6 +194,7 @@ export default function Game() {
             if (chek === WORDS1[number].leng) {
                 number++
                 if (number === 10) {
+                    //counter = 61
                     setSafeAreaView('none')
                     setFinalWindow('flex')
                 }
@@ -288,39 +291,46 @@ export default function Game() {
         }
     }
 
-    function back() {
-        number = 0
-        navigation.replace('Main')
-    }
-
     function final() {
         navigation.replace('Final', number)
+        counter = 0
+        number = 0
     }
 
+    function timer() {
+        counter = time
+        const intervalId = setInterval(async () => {
+            if (level === 0) {
+                if (counter === 120) {
+                    setcounterTextMM('02')
+                    setcounterTextSS('00')
+                }
+                counter -= 1
+                console.log(counter)
 
-    const Time = () => {
-        return (
-            <Timer
-                totalDuration={timerDuration}
-                secs
-                //msecs
-                //Час Тривалість
-                start={isTimerStart}
-                //To start
-                reset={resetTimer}
-                //Для скидання
-                //options={options}
-                //варіанти укладання
-                handleFinish={() => {
-                    setSafeAreaView('none')
+                if (counter <= 0) {
+                    console.log('Done')
+                    clearInterval(intervalId)
                     final()
-                }}
-            //може викликати функцію після закінчення часу
-            // getTime={(time) => {
-            //     console.log(time);
-            // }}
-            />
-        )
+                }
+
+                if (counter >= 60) {
+                    setcounterTextMM('01')
+                    if ((counter - 60) < 10)
+                        setcounterTextSS('0' + (counter - 60))
+                    else
+                        setcounterTextSS(counter - 60)
+                }
+                else if (counter <= 60) {
+                    setcounterTextMM('00')
+                    if (counter < 10)
+                        setcounterTextSS('0' + counter)
+                    else
+                        setcounterTextSS(counter)
+                }
+
+            }
+        }, 1000)
     }
 
     useEffect(() => {
@@ -335,15 +345,9 @@ export default function Game() {
                     <Text>Вгадано слів: {number} з 10</Text>
                 </View>
 
-                <Time />
-
-                <TouchableHighlight
-                    onPress={() => {
-                        setIsTimerStart(false);
-                        setResetTimer(true);
-                    }}>
-                    <Text>RESET</Text>
-                </TouchableHighlight>
+                <View>
+                    <Text>{counterTextMM} : {counterTextSS}</Text>
+                </View>
             </View>
 
             <View style={styles.container2}>
@@ -354,8 +358,7 @@ export default function Game() {
                 <View style={{ display: safeareaview }}>
                     <TouchableOpacity style={[{ display: buttonstart }, styles.startButton]}
                         onPress={() => {
-                            setIsTimerStart(!isTimerStart)
-                            setResetTimer(false)
+                            timer()
                             putNullWords()
                         }}>
                         <Text style={styles.backText}>Старт</Text>
@@ -383,7 +386,7 @@ export default function Game() {
 
             <View style={styles.backView}>
                 <TouchableOpacity style={styles.backButton}
-                    onPress={() => back()}>
+                    onPress={() => final()}>
                     <Text style={styles.backText}>Назад</Text>
                 </TouchableOpacity>
             </View>

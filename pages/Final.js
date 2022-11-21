@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StatusBar, SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native'
+import { useNavigation } from '@react-navigation/core'
+import { styles } from '../styles/game'
 
-
-export default function Final() {
-
+export default function Final({ number }) {
+    const navigation = useNavigation()
     return (
-        <SafeAreaView style={styles.modalView}>
+        <SafeAreaView style={styles.container}>
 
-            <View>
-                <Text style={styles.modalText}>Кінець</Text>
+            <View style={styles.modalView}>
+                <View>
+                    <Text style={styles.modalText}>Кінець - {number}</Text>
+                </View>
+
             </View>
+
+            <View style={styles.backView}>
+                <TouchableOpacity style={styles.backButton}
+                    onPress={() => navigation.replace('Main')}>
+                    <Text style={styles.backText}>В меню</Text>
+                </TouchableOpacity>
+            </View>
+
             <StatusBar
                 animated={true}
                 barStyle={'light-content'}
@@ -18,26 +30,3 @@ export default function Final() {
         </SafeAreaView>
     );
 }
-
-const styles = StyleSheet.create({
-    modalView: {
-        margin: 20,
-        backgroundColor: "white",
-        borderRadius: 20,
-        padding: 35,
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5
-    },
-
-    modalText: {
-        marginBottom: 15,
-        fontSize: 18,
-    }
-})

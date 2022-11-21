@@ -20,6 +20,11 @@ export default function Navigate() {
                 options={{ headerShown: false }}
             />
             <Stack.Screen
+                name="Final"
+                component={Final}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
                 name="Game"
                 component={Game}
                 options={{ headerShown: false }}
@@ -29,11 +34,7 @@ export default function Navigate() {
                 component={Settings}
                 options={{ headerShown: false }}
             />
-            <Stack.Screen
-                name="Final"
-                component={Final}
-                options={{ headerShown: false }}
-            />
+
         </Stack.Navigator>
     </NavigationContainer>;
 }

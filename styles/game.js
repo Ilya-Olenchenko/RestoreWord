@@ -4,10 +4,21 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignContent: 'center',
         alignItems: 'center',
         backgroundColor: 'whitesmoke'
+    },
+    container1: {
+        width: '100%',
+        alignContent: 'center',
+        alignItems: 'center',
+    },
+    container2: {
+        width: '100%',
+        height: '60%',
+        alignContent: 'center',
+        alignItems: 'center',
     },
     box1: {
         height: 60,
@@ -49,5 +60,31 @@ export const styles = StyleSheet.create({
     word2: {
         fontSize: 30,
         fontFamily: 'robot-media'
+    },
+    backView: {
+        width: '90%',
+        position: 'absolute',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        marginTop: 15
+    },
+    backButton: {
+        borderColor: 'black',
+        borderRadius: 4,
+        borderWidth: 1,
+    },
+    backText: {
+        paddingLeft: 5,
+        paddingRight: 5,
+        fontSize: 20,
+        fontFamily: 'robot-media'
+    },
+    backwordnumber: {
+        marginTop: 80
+    },
+    startButton: {
+        borderColor: 'black',
+        borderRadius: 4,
+        borderWidth: 1,
     }
 })

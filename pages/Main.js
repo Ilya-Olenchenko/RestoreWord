@@ -30,14 +30,14 @@ export default function Main() {
         <SafeAreaView style={styles.container}>
             <View style={styles.box}>
                 <TouchableOpacity style={styles.textbutton}
-                    onPress={() => navigation.navigate('Game', level)}>
+                    onPress={() => navigation.replace('Game', level)}>
                     <Text style={styles.textmain}>
                         Грати
                     </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.textbutton}
-                    onPress={() => navigation.navigate('Settings')}>
+                    onPress={() => navigation.replace('Settings')}>
                     <Text style={styles.textmain}>
                         Налаштування
                     </Text>

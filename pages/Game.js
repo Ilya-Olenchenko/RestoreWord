@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StatusBar, SafeAreaView, TouchableOpacity, FlatList } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useNavigation } from '@react-navigation/core'
 import { styles } from '../styles/game'
 
 let number = 0
+
 const WORDS0 = [
     {
         id: 0,
@@ -110,8 +112,8 @@ const WORDS1 = [
     }
 ]
 
-
 export default function Game() {
+    const navigation = useNavigation()
     const [level, setLevel] = useState('');
     const [words, setWords] = useState([]);
     const [randomwords, setRandomWords] = useState([]);
@@ -130,7 +132,6 @@ export default function Game() {
             alert(err);
         }
     }
-
 
     function shuffle(array) {
         let currentIndex = array.length, randomIndex;
@@ -177,7 +178,6 @@ export default function Game() {
             }
 
         }
-
         if (level === 1) {
             while (WORDS1[number].leng > i) {
                 if (words[i] === WORDS1[number].word[i]) {
@@ -196,7 +196,6 @@ export default function Game() {
             }
         }
     }
-
 
     function putNullWords() {
         setButtonStart('none')
@@ -253,6 +252,7 @@ export default function Game() {
             }
         }
     }
+
     const DeleteElementFromWords = (index, item) => {
         if (item !== '-') {
             let i = 0
@@ -284,48 +284,65 @@ export default function Game() {
         }
     }
 
+    function back() {
+        number = 0
+        navigation.replace('Main')
+    }
+
     useEffect(() => {
         load();
     }, []);
     safeareaview
     return (
         <SafeAreaView style={styles.container}>
-            <View>
-                <Text>Вгадано слів: {number} з 10</Text>
+            <View style={styles.container1}>
+                <View style={styles.backwordnumber}>
+                    <Text>Вгадано слів: {number} з 10</Text>
+                </View>
             </View>
 
-            <View style={{ display: finalwindow }}>
-                <Text>Ти пройшов гру!</Text>
+            <View style={styles.container2}>
+                <View style={{ display: finalwindow }}>
+                    <Text>Ти пройшов гру!</Text>
+                </View>
+                <View style={{ display: safeareaview }}>
+                    <TouchableOpacity style={[{ display: buttonstart }, styles.startButton]}
+                        onPress={() => putNullWords()}>
+                        <Text style={styles.backText}>Старт</Text>
+                    </TouchableOpacity>
+
+                    <View style={styles.box1}>
+                        <FlatList horizontal={true} data={randomwords} renderItem={({ index, item }) => (
+                            <TouchableOpacity key={index} style={styles.button1}
+                                onPress={() => EditElementFromRandomwords(index, item)}>
+                                <Text style={styles.word1}>{item} </Text>
+                            </TouchableOpacity>
+                        )} />
+                    </View>
+
+                    <View style={styles.box1}>
+                        <FlatList horizontal={true} data={words} renderItem={({ index, item }) => (
+                            <TouchableOpacity key={index} style={styles.button1}
+                                onPress={() => DeleteElementFromWords(index, item)}>
+                                <Text style={styles.word1}>{item} </Text>
+                            </TouchableOpacity>
+                        )} />
+                    </View>
+                </View>
             </View>
-            <View style={{ display: safeareaview }}>
-                <TouchableOpacity style={{ display: buttonstart }} onPress={() => putNullWords()}>
-                    <Text>Старт</Text>
+
+            <View style={styles.backView}>
+                <TouchableOpacity style={styles.backButton}
+                    onPress={() => back()}>
+                    <Text style={styles.backText}>Назад</Text>
                 </TouchableOpacity>
-
-                <View style={styles.box1}>
-                    <FlatList horizontal={true} data={randomwords} renderItem={({ index, item }) => (
-                        <TouchableOpacity key={index} style={styles.button1}
-                            onPress={() => EditElementFromRandomwords(index, item)}>
-                            <Text style={styles.word1}>{item} </Text>
-                        </TouchableOpacity>
-                    )} />
-                </View>
-
-                <View style={styles.box1}>
-                    <FlatList horizontal={true} data={words} renderItem={({ index, item }) => (
-                        <TouchableOpacity key={index} style={styles.button1}
-                            onPress={() => DeleteElementFromWords(index, item)}>
-                            <Text style={styles.word1}>{item} </Text>
-                        </TouchableOpacity>
-                    )} />
-                </View>
             </View>
+
             <StatusBar
                 animated={true}
                 barStyle={'light-content'}
                 backgroundColor="#17153C"
             />
-
         </SafeAreaView >
     );
 }

@@ -131,6 +131,14 @@ export default function Game() {
             if (level !== null && time !== null) {
                 setLevel(parseInt(level, 10));
                 setTime(parseInt(time, 10));
+                if (time == 120) {
+                    setcounterTextMM('02')
+                    setcounterTextSS('00')
+                }
+                else if (time == 60) {
+                    setcounterTextMM('01')
+                    setcounterTextSS('00')
+                }
             }
             console.log(level, time)
         } catch (err) {
@@ -292,26 +300,22 @@ export default function Game() {
     }
 
     function final() {
-        navigation.replace('Final', number)
         counter = 0
         number = 0
+        navigation.replace('Final', number)
     }
 
     function timer() {
         counter = time
         const intervalId = setInterval(async () => {
             if (level === 0) {
-                if (counter === 120) {
-                    setcounterTextMM('02')
-                    setcounterTextSS('00')
-                }
                 counter -= 1
                 console.log(counter)
 
                 if (counter <= 0) {
                     console.log('Done')
                     clearInterval(intervalId)
-                    final()
+                    navigation.replace('Final', number)
                 }
 
                 if (counter >= 60) {
@@ -321,6 +325,7 @@ export default function Game() {
                     else
                         setcounterTextSS(counter - 60)
                 }
+
                 else if (counter <= 60) {
                     setcounterTextMM('00')
                     if (counter < 10)
@@ -328,7 +333,24 @@ export default function Game() {
                     else
                         setcounterTextSS(counter)
                 }
+            }
+            if (level === 1) {
+                counter -= 1
+                console.log(counter)
 
+                if (counter <= 0) {
+                    console.log('Done')
+                    clearInterval(intervalId)
+                    final()
+                }
+
+                if (counter < 60) {
+                    setcounterTextMM('00')
+                    if (counter < 10)
+                        setcounterTextSS('0' + counter)
+                    else
+                        setcounterTextSS(counter)
+                }
             }
         }, 1000)
     }

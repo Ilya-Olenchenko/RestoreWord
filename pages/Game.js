@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/core'
 import { styles } from '../styles/game'
 
-let number = 0
+let number = 9
 let counter = 0
 const WORDS0 = [
     {
@@ -123,7 +123,6 @@ export default function Game() {
     const [randomwords, setRandomWords] = useState([]);
     const [buttonstart, setButtonStart] = useState('flex');
     const [safeareaview, setSafeAreaView] = useState('flex');
-    const [finalwindow, setFinalWindow] = useState('none');
 
     const load = async () => {
         try {
@@ -184,9 +183,7 @@ export default function Game() {
             if (chek === WORDS0[number].leng) {
                 number++
                 if (number === 10) {
-                    //counter = 61
-                    setSafeAreaView('none')
-                    setFinalWindow('flex')
+                    counter = 0
                 }
                 else
                     putNullWords()
@@ -203,9 +200,7 @@ export default function Game() {
             if (chek === WORDS1[number].leng) {
                 number++
                 if (number === 10) {
-                    //counter = 61
-                    setSafeAreaView('none')
-                    setFinalWindow('flex')
+                    counter = 0
                 }
                 else
                     putNullWords()
@@ -300,11 +295,6 @@ export default function Game() {
         }
     }
 
-    function final() {
-        counter = 0
-        //number = 0
-    }
-
     function timer() {
         counter = time
         const intervalId = setInterval(async () => {
@@ -313,9 +303,10 @@ export default function Game() {
                 console.log(counter)
 
                 if (counter <= 0) {
-                    console.log('Done')
-                    clearInterval(intervalId);
+                    clearInterval(intervalId)
                     setModalVisible(true)
+                    setcounterTextMM('00')
+                    setcounterTextSS('00')
                 }
 
                 if (counter >= 60) {
@@ -339,9 +330,10 @@ export default function Game() {
                 console.log(counter)
 
                 if (counter <= 0) {
-                    console.log('Done')
                     clearInterval(intervalId)
                     setModalVisible(true)
+                    setcounterTextMM('00')
+                    setcounterTextSS('00')
                 }
 
                 if (counter < 60) {
@@ -372,10 +364,6 @@ export default function Game() {
             </View>
 
             <View style={styles.container2}>
-                <View style={{ display: finalwindow }}>
-                    <Text>Вгадано всі слова!</Text>
-                </View>
-
                 <View style={{ display: safeareaview }}>
                     <TouchableOpacity style={[{ display: buttonstart }, styles.startButton]}
                         onPress={() => {

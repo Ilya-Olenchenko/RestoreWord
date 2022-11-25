@@ -20,7 +20,9 @@ export const styles = StyleSheet.create({
         alignItems: 'center'
     },
     textmain: {
-        padding: 8
+        paddingTop: 5,
+        fontSize: 15,
+        fontFamily: 'alkalami-regula',
     },
     developer: {
         color: 'white',

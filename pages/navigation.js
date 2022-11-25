@@ -4,7 +4,6 @@ import React from 'react'
 import Main from './Main'
 import Game from './Game'
 import Settings from './Settings'
-import Final from './Final'
 
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
@@ -17,11 +16,6 @@ export default function Navigate() {
             <Stack.Screen
                 name="Main"
                 component={Main}
-                options={{ headerShown: false }}
-            />
-            <Stack.Screen
-                name="Final"
-                component={Final}
                 options={{ headerShown: false }}
             />
             <Stack.Screen

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StatusBar, SafeAreaView, TouchableOpacity, TouchableHighlight, FlatList } from 'react-native'
+import { Text, View, StatusBar, SafeAreaView, TouchableOpacity, Modal, FlatList, Alert, Pressable } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/core'
 import { styles } from '../styles/game'
 
-let number = 8
+let number = 0
 let counter = 0
 const WORDS0 = [
     {
@@ -114,6 +114,7 @@ const WORDS1 = [
 
 export default function Game() {
     const navigation = useNavigation()
+    const [modalVisible, setModalVisible] = useState(false);
     const [level, setLevel] = useState('');
     const [time, setTime] = useState('');
     const [counterTextMM, setcounterTextMM] = useState('00');
@@ -301,8 +302,7 @@ export default function Game() {
 
     function final() {
         counter = 0
-        number = 0
-        navigation.replace('Final', number)
+        //number = 0
     }
 
     function timer() {
@@ -314,8 +314,8 @@ export default function Game() {
 
                 if (counter <= 0) {
                     console.log('Done')
-                    clearInterval(intervalId)
-                    navigation.replace('Final', number)
+                    clearInterval(intervalId);
+                    setModalVisible(true)
                 }
 
                 if (counter >= 60) {
@@ -341,7 +341,7 @@ export default function Game() {
                 if (counter <= 0) {
                     console.log('Done')
                     clearInterval(intervalId)
-                    final()
+                    setModalVisible(true)
                 }
 
                 if (counter < 60) {
@@ -362,13 +362,12 @@ export default function Game() {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.container1}>
-
                 <View style={styles.backwordnumber}>
-                    <Text>Вгадано слів: {number} з 10</Text>
+                    <Text style={{ fontFamily: 'robot-regular' }}>Вгадано слів: {number} з 10</Text>
                 </View>
 
                 <View>
-                    <Text>{counterTextMM} : {counterTextSS}</Text>
+                    <Text style={{ fontFamily: 'robot-regular' }}>{counterTextMM} : {counterTextSS}</Text>
                 </View>
             </View>
 
@@ -408,10 +407,39 @@ export default function Game() {
 
             <View style={styles.backView}>
                 <TouchableOpacity style={styles.backButton}
-                    onPress={() => final()}>
+                    onPress={() => {
+                        setModalVisible(true),
+                            counter = 0,
+                            setcounterTextMM('00'),
+                            setcounterTextSS('00')
+                    }}>
                     <Text style={styles.backText}>Назад</Text>
                 </TouchableOpacity>
             </View>
+
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                    setModalVisible(!modalVisible);
+                }}
+            >
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        <Text style={styles.modalText}>Кількість вгаданих слів: {number}</Text>
+                        <TouchableOpacity
+                            style={styles.buttonClose}
+                            onPress={() => {
+                                setModalVisible(!modalVisible),
+                                    number = 0,
+                                    navigation.replace('Main')
+                            }}>
+                            <Text style={styles.textStyle}>В меню</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
 
             <StatusBar
                 animated={true}

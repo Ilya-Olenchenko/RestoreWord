@@ -7,12 +7,17 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'whitesmoke'
+        backgroundColor: '#1d2c3a'
     },
     container1: {
-        width: '100%',
+        width: 190,
+        marginTop: 90,
+        height: 50,
         alignContent: 'center',
         alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#4ebfa7',
+        borderRadius: 5
     },
     container2: {
         width: '100%',
@@ -38,15 +43,14 @@ export const styles = StyleSheet.create({
     },
     button1: {
         width: 30,
-        borderWidth: 1,
         borderRadius: 5,
         margin: 5,
         alignItems: 'center',
-        paddingLeft: 1
+        paddingLeft: 1,
+        backgroundColor: '#4ebfa7',
     },
     button2: {
         width: 30,
-        borderWidth: 1,
         borderRadius: 5,
         margin: 5,
         alignItems: 'center',
@@ -55,7 +59,6 @@ export const styles = StyleSheet.create({
     word1: {
         fontSize: 30,
         fontFamily: 'robot-media',
-
     },
     word2: {
         fontSize: 30,
@@ -69,31 +72,35 @@ export const styles = StyleSheet.create({
         marginTop: 15
     },
     backButton: {
-        borderColor: 'black',
-        borderRadius: 4,
-        borderWidth: 1,
+        backgroundColor: '#4ebfa7',
+        borderRadius: 5,
+        margin: 10,
+        alignItems: 'center'
     },
     backText: {
         paddingLeft: 5,
         paddingRight: 5,
         fontSize: 20,
-        fontFamily: 'robot-media'
-    },
-    backwordnumber: {
-        marginTop: 80
+        fontFamily: 'robot-media',
+        margin: 10,
     },
     startButton: {
-        borderColor: 'black',
-        borderRadius: 4,
-        borderWidth: 1,
+        backgroundColor: '#4ebfa7',
+        borderRadius: 5,
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 8
     },
     modalView: {
         margin: 20,
-        backgroundColor: "white",
+        backgroundColor: "whitesmoke",
         borderRadius: 20,
-        padding: 35,
+        padding: 22,
         alignItems: "center",
-        shadowColor: "#000",
+        shadowColor: "white",
         shadowOffset: {
             width: 0,
             height: 2
@@ -102,9 +109,22 @@ export const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5
     },
-
+    buttonClose: {
+        backgroundColor: '#4ebfa7',
+        borderRadius: 5,
+        margin: 10,
+        alignItems: 'center'
+    },
+    textStyle: {
+        paddingLeft: 2,
+        paddingRight: 2,
+        fontSize: 15,
+        fontFamily: 'robot-regular',
+        margin: 2,
+    },
     modalText: {
+        fontFamily: 'robot-regular',
         marginBottom: 15,
-        fontSize: 18,
+        textAlign: "center"
     }
 })

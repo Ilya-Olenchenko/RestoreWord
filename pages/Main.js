@@ -8,15 +8,14 @@ import { styles } from '../styles/main'
 export default function Main() {
     const navigation = useNavigation()
 
-    const [level, setLevel] = useState('')
+    //const [level, setLevel] = useState('')
 
     const load = async () => {
         try {
             let level = await AsyncStorage.getItem('key_level')
             if (level !== null) {
-                setLevel(parseInt(level, 10));
+                //setLevel(parseInt(level, 10));
             }
-            console.log(level)
         } catch (err) {
             alert(err);
         }
@@ -30,7 +29,7 @@ export default function Main() {
         <SafeAreaView style={styles.container}>
             <View style={styles.box}>
                 <TouchableOpacity style={styles.textbutton}
-                    onPress={() => navigation.replace('Game', level)}>
+                    onPress={() => navigation.replace('Game')}>
                     <Text style={styles.textmain}>
                         Грати
                     </Text>

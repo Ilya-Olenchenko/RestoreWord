@@ -6,48 +6,46 @@ export const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'whitesmoke'
-    },
-    box1: {
-        height: '30%',
-        marginTop: 20,
-        justifyContent: 'center',
-        alignContent: 'center',
-        alignItems: 'center',
+        backgroundColor: '#1d2c3a'
     },
     box2: {
-        height: '15%',
+        height: '100%',
         marginBottom: 10,
         justifyContent: 'center',
         alignContent: 'center',
         alignItems: 'center',
     },
     button: {
-        margin: 13,
+        borderRadius: 5,
+        margin: 10,
+        backgroundColor: '#4ebfa7',
         width: 150,
-        height: 35,
-        borderColor: 'black',
-        borderWidth: 1,
-        borderRadius: 12,
+        alignItems: 'center'
+    },
+    header: {
+        height: 85,
+        width: "100%",
+        backgroundColor: '#4ebfa7',
+        position: 'absolute',
         justifyContent: 'center',
         alignContent: 'center',
         alignItems: 'center',
-    },
-    header: {
-
-        position: 'absolute',
+        borderBottomRightRadius: 5,
+        borderBottomLeftRadius: 5,
     },
     wordSettings: {
         fontSize: 20,
-        fontFamily: 'alkalami-regula'
+        fontFamily: 'alkalami-regula',
     },
     word: {
         fontSize: 15,
-        fontFamily: 'alkalami-regula'
+        fontFamily: 'alkalami-regula',
+        paddingTop: 5,
     },
     word1: {
-        fontSize: 20,
-        fontFamily: 'alkalami-regula'
+        fontSize: 16,
+        fontFamily: 'alkalami-regula',
+        marginTop: -15
     }
 
 })

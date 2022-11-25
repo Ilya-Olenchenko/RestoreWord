@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StatusBar, SafeAreaView, TouchableOpacity, Modal, FlatList, Alert, Pressable } from 'react-native'
+import { Text, View, StatusBar, SafeAreaView, TouchableOpacity, Modal, FlatList, Pressable } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/core'
 import { styles } from '../styles/game'
@@ -382,7 +382,7 @@ export default function Game() {
                             timer()
                             putNullWords()
                         }}>
-                        <Text style={styles.backText}>Старт</Text>
+                        <Text style={styles.backTextstart}>Старт</Text>
                     </TouchableOpacity>
 
                     <View style={styles.box1}>
@@ -396,10 +396,10 @@ export default function Game() {
 
                     <View style={styles.box1}>
                         <FlatList horizontal={true} data={words} renderItem={({ index, item }) => (
-                            <TouchableOpacity key={index} style={styles.button1}
+                            <Pressable key={index} style={styles.button1}
                                 onPress={() => DeleteElementFromWords(index, item)}>
                                 <Text style={styles.word1}>{item} </Text>
-                            </TouchableOpacity>
+                            </Pressable>
                         )} />
                     </View>
                 </View>
@@ -449,6 +449,3 @@ export default function Game() {
         </SafeAreaView >
     );
 }
-//додати кнопку "назад"
-//поправити нумбер
-

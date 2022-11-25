@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     },
     container1: {
         width: 190,
-        marginTop: 90,
+        marginTop: 120,
         height: 50,
         alignContent: 'center',
         alignItems: 'center',
@@ -74,10 +74,16 @@ export const styles = StyleSheet.create({
     backButton: {
         backgroundColor: '#4ebfa7',
         borderRadius: 5,
-        margin: 10,
         alignItems: 'center'
     },
     backText: {
+        paddingLeft: 5,
+        paddingRight: 5,
+        fontSize: 15,
+        fontFamily: 'robot-media',
+        margin: 10,
+    },
+    backTextstart: {
         paddingLeft: 5,
         paddingRight: 5,
         fontSize: 20,

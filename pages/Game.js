@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/core'
 import { styles } from '../styles/game'
 
-let number = 9
+let number = 0
 let counter = 0
 const WORDS0 = [
     {

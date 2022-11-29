@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StatusBar, SafeAreaView, TouchableOpacity, Modal, FlatList, Pressable } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/core'
 import { styles } from '../styles/game'
 
@@ -397,11 +398,9 @@ export default function Game() {
                 <TouchableOpacity style={styles.backButton}
                     onPress={() => {
                         setModalVisible(true),
-                            counter = 0,
-                            setcounterTextMM('00'),
-                            setcounterTextSS('00')
+                            counter = 0
                     }}>
-                    <Text style={styles.backText}>Назад</Text>
+                    <AntDesign name="leftsquare" size={45} color="#4ebfa7" />
                 </TouchableOpacity>
             </View>
 

@@ -3,7 +3,7 @@
     "name": "Restore Word",
     "slug": "RestoreWord",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "defualt",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {

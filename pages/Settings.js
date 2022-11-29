@@ -1,5 +1,6 @@
 import { Text, View, StatusBar, SafeAreaView, TouchableOpacity } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { AntDesign } from '@expo/vector-icons';
 import { styles } from '../styles/settings'
 import { useNavigation } from '@react-navigation/core'
 
@@ -16,8 +17,19 @@ export default function Settings() {
         }
     }
 
+
     return (
         <SafeAreaView style={styles.container}>
+            <View style={styles.header}>
+                <Text style={styles.wordSettings}>Налаштування</Text>
+
+            </View>
+            <View style={styles.backView}>
+                <TouchableOpacity style={styles.backButton}
+                    onPress={() => navigation.replace('Main')}>
+                    <AntDesign name="leftsquare" size={45} color="#4ebfa7" />
+                </TouchableOpacity>
+            </View>
 
             <View style={styles.box2}>
                 <TouchableOpacity style={styles.button} onPress={() => save('0', '120')}>
@@ -27,11 +39,6 @@ export default function Settings() {
                 <TouchableOpacity style={styles.button} onPress={() => save('1', '60')}>
                     <Text style={styles.word}>Важко</Text>
                 </TouchableOpacity>
-            </View>
-
-            <View style={styles.header}>
-                <Text style={styles.wordSettings}>Налаштування</Text>
-                <Text style={styles.word1}>Складність</Text>
             </View>
 
             <StatusBar

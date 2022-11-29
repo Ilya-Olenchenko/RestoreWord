@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
     },
     container2: {
         width: '100%',
-        height: '60%',
+        height: '45%',
         alignContent: 'center',
         alignItems: 'center',
     },
@@ -72,16 +72,11 @@ export const styles = StyleSheet.create({
         marginTop: 15
     },
     backButton: {
-        backgroundColor: '#4ebfa7',
-        borderRadius: 5,
-        alignItems: 'center'
+
     },
     backText: {
-        paddingLeft: 5,
-        paddingRight: 5,
-        fontSize: 15,
+        fontSize: 25,
         fontFamily: 'robot-media',
-        margin: 10,
     },
     backTextstart: {
         paddingLeft: 5,
@@ -93,6 +88,9 @@ export const styles = StyleSheet.create({
     startButton: {
         backgroundColor: '#4ebfa7',
         borderRadius: 5,
+        width: 110,
+        height: 50,
+        alignItems: 'center',
     },
     centeredView: {
         flex: 1,

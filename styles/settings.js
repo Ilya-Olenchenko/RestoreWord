@@ -19,11 +19,12 @@ export const styles = StyleSheet.create({
         borderRadius: 5,
         margin: 10,
         backgroundColor: '#4ebfa7',
-        width: 150,
+        width: 200,
+        height: 50,
         alignItems: 'center'
     },
     header: {
-        height: 85,
+        height: 50,
         width: "100%",
         backgroundColor: '#4ebfa7',
         position: 'absolute',
@@ -38,14 +39,27 @@ export const styles = StyleSheet.create({
         fontFamily: 'alkalami-regula',
     },
     word: {
-        fontSize: 15,
+        fontSize: 20,
         fontFamily: 'alkalami-regula',
-        paddingTop: 5,
+        paddingTop: 3,
     },
     word1: {
         fontSize: 16,
         fontFamily: 'alkalami-regula',
         marginTop: -15
-    }
+    },
+    backView: {
+        width: '90%',
+        position: 'absolute',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        marginTop: 65
+    },
+    backButton: {
 
+    },
+    backText: {
+        fontSize: 36,
+        fontFamily: 'robot-media',
+    },
 })

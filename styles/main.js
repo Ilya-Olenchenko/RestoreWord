@@ -8,9 +8,15 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#1d2c3a'
     },
-    box: {
-        marginTop: 200,
+    container2: {
+        marginTop: 20,
+        height: '60%',
         alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    box: {
+        alignItems: 'center',
+        alignContent: 'center'
     },
     textbutton: {
         borderRadius: 5,

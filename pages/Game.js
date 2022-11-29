@@ -141,6 +141,12 @@ export default function Game() {
                     setcounterTextSS('00')
                 }
             }
+            else {
+                setLevel(0);
+                setTime(120);
+                setcounterTextMM('02')
+                setcounterTextSS('00')
+            }
             console.log(level, time)
         } catch (err) {
             alert(err);
